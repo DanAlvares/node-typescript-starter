@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
+const cors_1 = require("./middleware/cors");
+// const dotenv = require('dotenv');
 const app = express();
 const router = express.Router();
-app.set("port", process.env.PORT || 3000);
+const port = process.env.PORT || 3000;
+app.use(cors_1.CORS);
 // API Endpoints
-router.route('/').get((req, res) => {
-    res.send("Hello");
+router.get('/', (req, res) => {
+    res.send('Hello');
 });
+// dotenv.config({ path: '.env.example' });
 app.use('/', router);
-const server = app.listen(app.get("port"), () => {
-    console.log("App is running on http://localhost:%d in %s mode", app.get("port"), app.get("env"));
-});
-exports.default = server;
+app.listen(port, () => { console.log(`App is running on http://localhost:${port}`); });
 //# sourceMappingURL=server.js.map
