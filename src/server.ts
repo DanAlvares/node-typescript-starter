@@ -1,25 +1,22 @@
 import * as express from 'express';
-import * as path from 'path';
+import { UserRoutes } from './routes/users.routes';
 
 import { CORS } from './middleware/cors'
-import { Authenticate } from './middleware/authenticate';
 
-// const dotenv = require('dotenv');
+import { Request, Response, NextFunction } from 'express';
 
 const app = express();
 const router = express.Router();
 const port = process.env.PORT || 3000;
 
+// Setup environment variables
+require('dotenv').config({ path: '.env' });;
+
 app.use(CORS);
 
-// API Endpoints
-router.get('/', (req, res) => {
-    res.send('Hello');
-});
+UserRoutes(router)
 
-// dotenv.config({ path: '.env.example' });
-
-app.use('/', router);
+app.use('/api', router);
 
 app.listen(port, () => { console.log(`App is running on http://localhost:${port}`) });
 
